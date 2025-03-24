@@ -772,12 +772,13 @@ const restaurants = [
 
 // your code here
 
-function distance(start, end) {
-  const dist = Math.sqrt((start[1] - start[0]) ** 2 + (end[1] - end[0]) ** 2);
-  return dist;
-}
-
 const taulukko = document.querySelector('table');
+const modal = document.querySelector('#modal');
+
+// restaurants aakkosjärjestykseen
+restaurants.sort(function (a, b) {
+  return a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
+});
 
 // Options for retrieving location information (optional)
 const options = {
@@ -794,17 +795,39 @@ function success(pos) {
 
   console.log(alkupiste);
 
+  // restaurants aakkosjärjestykseen
   restaurants.sort(function (a, b) {
-    return (
-      distance(alkupiste, a.location.coordinates) -
-      distance(alkupiste, b.location.coordinates)
-    );
+    return a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
   });
+
   console.log(restaurants);
 
   for (const restaurant of restaurants) {
     // rivi
     const tr = document.createElement('tr');
+
+    tr.addEventListener('click', () => {
+      for (let elem of document.querySelectorAll('.highlight')) {
+        elem.classList.remove('highlight');
+      }
+      tr.classList.add('highlight');
+      modal.innerHTML = '';
+
+      // nimi h3
+      const nameh3 = document.createElement('h3');
+      nameh3.innerText = restaurant.name;
+      // osoite p
+      const addressP = document.createElement('p');
+      addressP.innerText = restaurant.address;
+      // kaupunki solu
+      const cityP = document.createElement('p');
+      cityP.innerText = restaurant.city;
+      // listaan lisäys
+      const phoneP = document.createElement('p');
+      phoneP.innerText = restaurant.phone;
+      modal.append(nameh3, addressP, cityP, phoneP);
+      modal.showModal();
+    });
     // nimi solu
     const nameTd = document.createElement('td');
     nameTd.innerText = restaurant.name;
