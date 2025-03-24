@@ -13,7 +13,7 @@ li {
   border: 1px solid #000;
   display: flex;
   justify-content: flex-end;
-  line-height: 3rem;
+  height: 3rem;
 }
 
 label {
