@@ -771,3 +771,58 @@ const restaurants = [
 ];
 
 // your code here
+
+function distance(start, end) {
+  const dist = Math.sqrt((start[1] - start[0]) ** 2 + (end[1] - end[0]) ** 2);
+  return dist;
+}
+
+const taulukko = document.querySelector('table');
+
+// Options for retrieving location information (optional)
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+function success(pos) {
+  const crd = pos.coords;
+
+  // muista geoJSON, long ensin
+  const alkupiste = [crd.longitude, crd.latitude];
+
+  console.log(alkupiste);
+
+  restaurants.sort(function (a, b) {
+    return (
+      distance(alkupiste, a.location.coordinates) -
+      distance(alkupiste, b.location.coordinates)
+    );
+  });
+  console.log(restaurants);
+
+  for (const restaurant of restaurants) {
+    // rivi
+    const tr = document.createElement('tr');
+    // nimi solu
+    const nameTd = document.createElement('td');
+    nameTd.innerText = restaurant.name;
+    // osoite solu
+    const addressTd = document.createElement('td');
+    addressTd.innerText = restaurant.address;
+    // kaupunki solu
+    const cityTd = document.createElement('td');
+    cityTd.innerText = restaurant.city;
+    // listaan lisäys
+    tr.append(nameTd, addressTd, cityTd);
+    taulukko.appendChild(tr);
+  }
+}
+
+// Function to be called if an error occurs while retrieving location information
+function error(err) {
+  console.log(err.message);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);

@@ -1,5 +1,3 @@
-import { distance } from "../lib/euclidean.js";
-
 const restaurants = [
   {
     location: { type: "Point", coordinates: [25.018456, 60.228982] },
@@ -773,6 +771,11 @@ const restaurants = [
 ];
 
 // your code here
+
+function distance(start, end) {
+  const dist = Math.sqrt((start[1] - start[0]) ** 2 + (end[1] - end[0]) ** 2);
+  return dist;
+}
 
 const taulukko = document.querySelector("table");
 
