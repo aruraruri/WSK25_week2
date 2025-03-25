@@ -46,5 +46,4 @@ todoList.forEach((todo) => {
   li.append(input, label);
 
   ul.appendChild(li);
-  navigator.
 });
