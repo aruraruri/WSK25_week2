@@ -12,7 +12,6 @@ const p3 = document.createElement("p");
 p3.innerText = `Document size is: ${window.innerWidth}px wide/${window.innerHeight}px high`;
 
 const currentDate = new Date();
-const timestamp = currentDate.getTime();
 const p4 = document.createElement("p");
 p4.innerText = `Current date and time is: ${currentDate.toLocaleDateString()}, ${currentDate.getHours()}:${currentDate.getMinutes()}`;
 
