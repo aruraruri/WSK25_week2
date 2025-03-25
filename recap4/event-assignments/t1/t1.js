@@ -35,6 +35,7 @@ const ul = document.querySelector('ul');
 function addNewTodo(newitem) {
   todoList.push(newitem);
   updateTodoListVisual();
+  assignEventListeners();
 }
 
 function removeTodo(id) {
@@ -57,9 +58,36 @@ function changeTodoDone(id) {
   }
 }
 
+// construct modal
+function todoAddModal() {
+  modal.innerHTML = '';
+  const form = document.createElement('form');
+
+  const modalAddButton = document.createElement('input');
+
+  modalAddButton.type = 'submit';
+  modalAddButton.classList.add('modal-add-button');
+
+  const inputText = document.createElement('input');
+  inputText.type = 'text';
+
+  form.append(modalAddButton, inputText);
+  modal.append(form);
+
+  modalAddButton.addEventListener('click', evt => {
+    evt.preventDefault();
+    console.log(inputText.value);
+    addNewTodo({
+      id: todoList.length + 1,
+      task: `${inputText.value.trim()}`,
+      completed: false,
+    });
+  });
+}
+
 // create li elem
 function updateTodoListVisual() {
-  // empty out list
+  // empty out ul list first
   ul.innerHTML = '';
   for (let todo of todoList) {
     const li = document.createElement('li');
@@ -86,7 +114,6 @@ function updateTodoListVisual() {
   }
 }
 
-//initial todo list
 // testing list item creation
 addNewTodo({
   id: 6,
@@ -117,6 +144,7 @@ function assignEventListeners() {
   }
 
   addTodoButton.addEventListener('click', () => {
+    todoAddModal();
     modal.showModal();
   });
 }
