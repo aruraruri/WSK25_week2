@@ -29,53 +29,97 @@ let todoList = [
 
 // add your code here
 
+const modal = document.querySelector('#modal');
 const ul = document.querySelector('ul');
 
-todoList.forEach(todo => {
-  const li = document.createElement('li');
+function addNewTodo(newitem) {
+  todoList.push(newitem);
+  updateTodoListVisual();
+}
 
-  const input = document.createElement('input');
-  input.type = 'checkbox';
-  input.id = `todo${todo.id}`;
-  input.checked = todo.completed ? 'checked' : '';
+function removeTodo(id) {
+  for (let i = 0; i < todoList.length; i++) {
+    if (todoList[i].id == id) {
+      todoList.splice(i, 1);
+      updateTodoListVisual();
+      assignEventListeners();
+      break;
+    }
+  }
+}
 
-  const label = document.createElement('label');
-  label.htmlFor = `todo${todo.id}`;
-  label.innerText = todo.task;
+function changeTodoDone(id) {
+  for (let i = 0; i < todoList.length; i++) {
+    if (id == todoList[i].id) {
+      todoList[i].completed = !todoList[i].completed;
+      console.log(todoList);
+    }
+  }
+}
 
-  const deleteButton = document.createElement('button');
-  deleteButton.innerText = 'x';
+// create li elem
+function updateTodoListVisual() {
+  // empty out list
+  ul.innerHTML = '';
+  for (let todo of todoList) {
+    const li = document.createElement('li');
 
-  li.append(input, label, deleteButton);
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.id = `${todo.id}`;
+    input.checked = todo.completed ? 'checked' : '';
 
-  ul.appendChild(li);
+    const label = document.createElement('label');
+    label.htmlFor = `${todo.id}`;
+    label.innerText = todo.task;
+
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete');
+    deleteButton.id = `${todo.id}`;
+    deleteButton.innerText = 'x';
+
+    li.append(input, label, deleteButton);
+
+    ul.appendChild(li);
+
+    console.log('update todo list visual');
+  }
+}
+
+//initial todo list
+// testing list item creation
+addNewTodo({
+  id: 6,
+  task: 'Jihuu',
 });
 
-function getListItems() {
-  return ul.getElementsByTagName('li');
-}
+// CLICKABLE ELEMENTS
+function assignEventListeners() {
+  let checkboxes = document.querySelectorAll(`input[type=checkbox]`);
+  let deletebuttons = document.querySelectorAll(`button.delete`);
+  let addTodoButton = document.querySelector('button.add-btn');
 
-for (let i = 0; i < getListItems().length; i++) {
-  try {
-    getListItems()
-      [i].getElementsByTagName('input')[0]
-      .addEventListener('click', function () {
-        todoList[i].completed = !todoList[i].completed;
-        console.log(todoList);
-      });
-  } catch (error) {
-    console.warn(error);
+  console.log(document.querySelectorAll(`input[type=checkbox]`));
+  console.log(document.querySelectorAll(`button.delete`));
+
+  // checkbox todo list data modification on clicking checkbox
+  for (let box of checkboxes) {
+    box.addEventListener('click', () => {
+      changeTodoDone(box.id);
+    });
   }
 
-  try {
-    getListItems()
-      [i].getElementsByTagName('button')[0]
-      .addEventListener('click', function () {
-        console.log('AA');
-        todoList = todoList.splice(i, 1);
-        getListItems()[i].remove();
-      });
-  } catch (error) {
-    console.warn(error);
+  for (let buton of deletebuttons) {
+    buton.addEventListener('click', () => {
+      console.log(buton.id);
+      removeTodo(buton.id);
+    });
   }
+
+  addTodoButton.addEventListener('click', () => {
+    modal.showModal();
+  });
 }
+
+// initial assignment of event listeners
+assignEventListeners();
