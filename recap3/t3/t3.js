@@ -16,3 +16,9 @@ const p4 = document.createElement("p");
 p4.innerText = `Current date and time is: ${currentDate.toLocaleDateString()}, ${currentDate.getHours()}:${currentDate.getMinutes()}`;
 
 targetDiv.append(p1, p2, p3, p4);
+
+const isAdult = (age) => {
+  return age >= 18 ? "is" : "is no";
+};
+
+console.log("is age 20 adult? " + isAdult(20) + ".");
