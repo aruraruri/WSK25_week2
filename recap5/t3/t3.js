@@ -47,4 +47,4 @@ async function deleteUser(userId) {
   }
 }
 
-deleteUser();
+deleteUser(2);
