@@ -811,21 +811,29 @@ function success(pos) {
         elem.classList.remove('highlight');
       }
       tr.classList.add('highlight');
-      modal.innerHTML = '';
 
+      // construct modal
+      modal.innerHTML = '';
       // nimi h3
       const nameh3 = document.createElement('h3');
       nameh3.innerText = restaurant.name;
       // osoite p
       const addressP = document.createElement('p');
       addressP.innerText = restaurant.address;
-      // kaupunki solu
+      // kaupunki
       const cityP = document.createElement('p');
       cityP.innerText = restaurant.city;
-      // listaan lisäys
+      // phone
       const phoneP = document.createElement('p');
       phoneP.innerText = restaurant.phone;
-      modal.append(nameh3, addressP, cityP, phoneP);
+      // postiosoite
+      const postal = document.createElement('p');
+      postal.innerText = 'Postal code: ' + restaurant.postalCode;
+      // yrityksen nimi
+      const compName = document.createElement('p');
+      compName.innerText = restaurant.company;
+
+      modal.append(nameh3, compName, addressP, cityP, postal, phoneP);
       modal.showModal();
     });
     // nimi solu
