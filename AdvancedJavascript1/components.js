@@ -1,4 +1,4 @@
-import { fetchData } from "./fetchData.js";
+import { fetchData } from "./utils.js";
 
 export const populateModalWithRestaurantInfo = (modal, restaurant) => {
   // construct daily menu
