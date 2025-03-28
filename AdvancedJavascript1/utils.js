@@ -4,3 +4,9 @@ export const alphabeticSort = (objectList) => {
     return a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1;
   });
 };
+
+export const fetchData = async (url, options) => {
+  const response = await fetch(url, options);
+  const json = await response.json();
+  return json;
+};

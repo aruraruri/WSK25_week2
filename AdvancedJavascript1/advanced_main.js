@@ -1,11 +1,9 @@
 import { constructRestaurantList } from "./components.js";
-import { fetchData } from "./fetchData.js";
-import { alphabeticSort } from "./utils.js";
+import { alphabeticSort, fetchData } from "./utils.js";
+import { restaurantsUrl } from "./variables.js";
 
 let restaurants;
-await fetchData(
-  "https://media2.edu.metropolia.fi/restaurant/api/v1/restaurants"
-).then((data) => {
+await fetchData(restaurantsUrl).then((data) => {
   restaurants = data;
 });
 console.log(restaurants);
